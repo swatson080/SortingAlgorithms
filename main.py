@@ -2,7 +2,7 @@
 # TODO: Get a .csv containing unsorted integers to read in to test sorting
 # TODO: Make a GUI for this
 
-### THE QUICKSORT ALGORITHM ###
+### THE QUICKSORT ALGORITHM -- O(nlogn) -> O(n^2) ###
 
 # partition - Defines a pivot element then rearranges list so that elements less than or equal to the pivot
 # are to the left of it while elements greater than or equal to it are on the right
@@ -54,11 +54,63 @@ def quickSort(list, start, end):
     quickSort(list, start, p-1)
     quickSort(list, p+1, end)
 
+### THE MERGESORT ALGORITHM -- O(nlogn)###
+
+def merge(list, left, right, middle):
+    # First make copies of each array to be merged
+    left_copy = list[left:middle+1]
+    right_copy = list[middle+1:right+1]
+
+    # Pointers to keep track of position in each array
+    left_copy_pos = 0
+    right_copy_pos = 0
+    sorted_index = left
+
+    # Now go through both list copies until we run out of elements in one of them
+    while left_copy_pos < len(left_copy) and right_copy_pos < len(right_copy):
+
+        # If the left copy element is smaller, position it in the sorted array
+        if left_copy[left_copy_pos] <= right_copy[right_copy_pos]:
+            list[sorted_index] = left_copy[left_copy_pos]
+            left_copy_pos += 1
+
+        # If the right copy element is smaller, position it in the sorted array
+        else:
+            list[sorted_index] = right_copy[right_copy_pos]
+            right_copy_pos += 1
+
+        # Move the pointer for the sorted list forward
+        sorted_index += 1
+
+    # We have now run out of elements in one of the arrays
+    # At this point we can add all remaining elements of the leftover array in the order they are currently in
+    while left_copy_pos < len(left_copy):
+        list[sorted_index] = left_copy[left_copy_pos]
+        left_copy_pos += 1
+        sorted_index += 1
+
+    while right_copy_pos < len(right_copy):
+        list[sorted_index] = right_copy[right_copy_pos]
+        right_copy_pos += 1
+        sorted_index += 1
+
+# Merge sort recursively breaks the list in half until we have subarrays of one element each
+# Merge is then called on pairs of these arrays, and the elements are 'merged' into their sorted positions
+def mergeSort(list, left, right):
+    # Base case
+    if left >= right:
+        return
+
+    # Recursive steps
+    middle = (left + right) // 2
+    mergeSort(list, left, middle)
+    mergeSort(list, middle+1, right)
+    merge(list, left, right, middle)
 
 # Try out your own list here!
-testList = [5, 20, 3, -1, 32, 50, 1010, 331]
+testList = [31, 45, 2, 35, 7, 50, 100, 1, 28, 47, 30, 3, 49, 15, 21, 24, 45]
 print(testList)
-quickSort(testList, 0, len(testList)-1)
+mergeSort(testList, 0, len(testList)-1)
 print(testList)
 
 
