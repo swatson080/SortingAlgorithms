@@ -58,41 +58,41 @@ def quickSort(list, start, end):
 
 def merge(list, left, right, middle):
     # First make copies of each array to be merged
-    left_copy = list[left:middle+1]
-    right_copy = list[middle+1:right+1]
+    leftCopy = list[left:middle+1]
+    rightCopy = list[middle+1:right+1]
 
     # Pointers to keep track of position in each array
-    left_copy_pos = 0
-    right_copy_pos = 0
-    sorted_index = left
+    leftPos = 0
+    rightPos = 0
+    sortedIndex = left
 
     # Now go through both list copies until we run out of elements in one of them
-    while left_copy_pos < len(left_copy) and right_copy_pos < len(right_copy):
+    while leftPos < len(leftCopy) and rightPos < len(rightCopy):
 
         # If the left copy element is smaller, position it in the sorted array
-        if left_copy[left_copy_pos] <= right_copy[right_copy_pos]:
-            list[sorted_index] = left_copy[left_copy_pos]
-            left_copy_pos += 1
+        if leftCopy[leftPos] <= rightCopy[rightPos]:
+            list[sortedIndex] = leftCopy[leftPos]
+            leftPos += 1
 
         # If the right copy element is smaller, position it in the sorted array
         else:
-            list[sorted_index] = right_copy[right_copy_pos]
-            right_copy_pos += 1
+            list[sortedIndex] = rightCopy[rightPos]
+            rightPos += 1
 
         # Move the pointer for the sorted list forward
-        sorted_index += 1
+        sortedIndex += 1
 
     # We have now run out of elements in one of the arrays
     # At this point we can add all remaining elements of the leftover array in the order they are currently in
-    while left_copy_pos < len(left_copy):
-        list[sorted_index] = left_copy[left_copy_pos]
-        left_copy_pos += 1
-        sorted_index += 1
+    while leftPos < len(leftCopy):
+        list[sortedIndex] = leftCopy[leftPos]
+        leftPos += 1
+        sortedIndex += 1
 
-    while right_copy_pos < len(right_copy):
-        list[sorted_index] = right_copy[right_copy_pos]
-        right_copy_pos += 1
-        sorted_index += 1
+    while rightPos < len(rightCopy):
+        list[sortedIndex] = rightCopy[rightPos]
+        rightPos += 1
+        sortedIndex += 1
 
 # Merge sort recursively breaks the list in half until we have subarrays of one element each
 # Merge is then called on pairs of these arrays, and the elements are 'merged' into their sorted positions
